@@ -24,12 +24,14 @@ def call_llamafile_with_image(image_path, prompt):
 
         # Construct the payload in OpenAI format
         payload = {
-            "model": "llava",  # Change this based on available models
+            "model": "llava",  # Ensure the model supports vision inputs
             "messages": [
                 {"role": "system", "content": "You are an AI that can recognize text in images."},
-                {"role": "user", "content": prompt, "image": base64_image}
-            ]
+                {"role": "user", "content": prompt}
+            ],
+            "image": base64_image  # Move image outside of messages
         }
+
 
         # Send request
         headers = {"Content-Type": "application/json"}
@@ -47,8 +49,8 @@ def call_llamafile_with_image(image_path, prompt):
         return f"Error: {e}"
 
 if __name__ == "__main__":
-    image_path = "./assets/license_plate_3.png"
-    prompt = "What does the license plate say?"
+    image_path = "./assets/eye_exam_funny.png"
+    prompt = "What does the image say?"
     
     response_text = call_llamafile_with_image(image_path, prompt)
     print("Llamafile Response:", response_text)
