@@ -1,7 +1,6 @@
 import pytesseract
 from PIL import Image
-import fitz
-
+import fitz  # PyMuPDF
 
 def convert_pdf_to_image(pdf_path):
     """
@@ -36,6 +35,8 @@ def run_ocr(image_path):
     Returns:
         text (str): The recognized text
     """
+    # Set the path to the Tesseract executable
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
     # Open the image file
     img = Image.open(image_path)
     # Use pytesseract to do OCR on the image
@@ -47,6 +48,5 @@ def run_ocr(image_path):
 if __name__ == "__main__":
     # Example image from https://www.archives.gov/files/research/jfk/releases/2025/0318/104-10012-10022.pdf
     image_path = convert_pdf_to_image('./assets/104-10012-10022.pdf')
-    image = Image.open(image_path)
-    text = run_ocr(image)
+    text = run_ocr(image_path)
     print(text)
